@@ -8,13 +8,6 @@ export async function RegisterUser(req, res) {
     try {
         const { name, email, password } = req.body;
 
-        // Validate Gmail domain
-        if (!verifyGmailDomain(email)) {
-            return res.status(400).json({
-                msg: "Only official Gmail accounts (@gmail.com) are allowed"
-            });
-        }
-        
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ msg: "User already exists" });
@@ -57,7 +50,7 @@ try{
     }
     if (user && (await bcrypt.compare(password, user.password))){
         const token = jwt.sign(
-            { id: user._id, email: user.email },
+            { id: user._id},
             process.env.JWT_SECRET || process.env.your_secret_key,
             { expiresIn: "1h" }
         );
