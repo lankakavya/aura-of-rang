@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6
+    },
+
+    isEmailVerified: {
+      type: Boolean,
+      default: false
+    },
+
+    googleId: {
+      type: String,
+      default: null
     }
   },
   {
